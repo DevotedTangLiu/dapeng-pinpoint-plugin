@@ -8,7 +8,6 @@ import com.navercorp.pinpoint.common.trace.TraceMetadataSetupContext;
  */
 public class DapengTraceMetadataProvider implements TraceMetadataProvider {
 
-
     @Override
     public void setup(TraceMetadataSetupContext context) {
 

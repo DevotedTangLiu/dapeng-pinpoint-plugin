@@ -12,7 +12,7 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <jdk.home>/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home</jdk.home>
         <pinpoint.version>1.6.0-SNAPSHOT</pinpoint.version>
     </properties>
@@ -20,8 +20,16 @@
     <dependencies>
         <dependency>
             <groupId>com.navercorp.pinpoint</groupId>
-            <artifactId>pinpoint-bootstrap</artifactId>
+            <artifactId>pinpoint-bootstrap-core</artifactId>
             <version>${pinpoint.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.isuwang</groupId>
+            <artifactId>dapeng-remoting-api</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- for test -->
@@ -32,19 +40,19 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- for integration test -->
-        <dependency>
-            <groupId>com.navercorp.pinpoint</groupId>
-            <artifactId>pinpoint-profiler</artifactId>
-            <version>${pinpoint.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.navercorp.pinpoint</groupId>
-            <artifactId>pinpoint-profiler-optional-jdk8</artifactId>
-            <version>${pinpoint.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+        <!--&lt;!&ndash; for integration test &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.navercorp.pinpoint</groupId>-->
+            <!--<artifactId>pinpoint-profiler</artifactId>-->
+            <!--<version>${pinpoint.version}</version>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.navercorp.pinpoint</groupId>-->
+            <!--<artifactId>pinpoint-profiler-optional-jdk8</artifactId>-->
+            <!--<version>${pinpoint.version}</version>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -65,61 +73,61 @@
                     <executable>${jdk.home}/bin/javac</executable>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/Mock*</exclude>
-                        <exclude>**/Abstract*</exclude>
-                        <exclude>**/*Helper</exclude>
-                        <exclude>**/*$*</exclude>
-                    </excludes>
-                    <argLine>-Dfile.encoding=${encoding}</argLine>
-                    <jvm>${jdk.home}/bin/java</jvm>
-                    <forkMode>once</forkMode>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/integration-test/assembly/assembly.xml</descriptor>
-                    </descriptors>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test-agent</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- AbstractPinpointPluginTestSuite needs this to resolve path of required jars -->
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <failIfNoTests>true</failIfNoTests>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.17</version>-->
+                <!--<configuration>-->
+                    <!--<excludes>-->
+                        <!--<exclude>**/Mock*</exclude>-->
+                        <!--<exclude>**/Abstract*</exclude>-->
+                        <!--<exclude>**/*Helper</exclude>-->
+                        <!--<exclude>**/*$*</exclude>-->
+                    <!--</excludes>-->
+                    <!--<argLine>-Dfile.encoding=${encoding}</argLine>-->
+                    <!--<jvm>${jdk.home}/bin/java</jvm>-->
+                    <!--<forkMode>once</forkMode>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<version>2.5.3</version>-->
+                <!--<configuration>-->
+                    <!--<descriptors>-->
+                        <!--<descriptor>src/integration-test/assembly/assembly.xml</descriptor>-->
+                    <!--</descriptors>-->
+                    <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+                    <!--<appendAssemblyId>false</appendAssemblyId>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>integration-test-agent</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-failsafe-plugin</artifactId>-->
+                <!--<version>2.18.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>integration-test</goal>-->
+                            <!--<goal>verify</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash; AbstractPinpointPluginTestSuite needs this to resolve path of required jars &ndash;&gt;-->
+                    <!--<useSystemClassLoader>false</useSystemClassLoader>-->
+                    <!--<failIfNoTests>true</failIfNoTests>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
