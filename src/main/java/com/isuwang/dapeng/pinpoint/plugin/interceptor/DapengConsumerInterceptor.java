@@ -8,6 +8,8 @@ import com.navercorp.pinpoint.bootstrap.interceptor.AroundInterceptor4;
 import com.navercorp.pinpoint.bootstrap.logging.PLogger;
 import com.navercorp.pinpoint.bootstrap.logging.PLoggerFactory;
 
+import static com.isuwang.dapeng.pinpoint.plugin.DapengConstants.DAPENG_MONITOR_SERVICE;
+
 /**
  * Created by tangliu on 16/12/6.
  */
@@ -28,7 +30,7 @@ public class DapengConsumerInterceptor implements AroundInterceptor4 {
 
         //不监控 MonitorService
         SoaHeader soaHeader = InvocationContext.Factory.getCurrentInstance().getHeader();
-        if(soaHeader.getServiceName().equals("com.isuwang.dapeng.monitor.api.service.MonitorService"))
+        if (soaHeader.getServiceName().equals(DAPENG_MONITOR_SERVICE))
             return;
 
         Trace trace = traceContext.currentTraceObject();
