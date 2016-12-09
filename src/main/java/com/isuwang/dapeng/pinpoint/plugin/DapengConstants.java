@@ -24,4 +24,6 @@ public class DapengConstants {
 
     public static String DAPENG_ARGS = "dapeng_args";
     public static String DAPENG_RESULT = "dapeng_result";
+
+    public static String DAPENG_MONITOR_SERVICE = "com.isuwang.dapeng.monitor.api.service.MonitorService";
 }

@@ -11,6 +11,8 @@ import com.navercorp.pinpoint.bootstrap.logging.PLoggerFactory;
 import com.navercorp.pinpoint.bootstrap.util.NumberUtils;
 import com.navercorp.pinpoint.common.trace.ServiceType;
 
+import static com.isuwang.dapeng.pinpoint.plugin.DapengConstants.DAPENG_MONITOR_SERVICE;
+
 /**
  * Created by tangliu on 16/12/7.
  */
@@ -54,7 +56,10 @@ public class DapengProviderInterceptor extends SpanSimpleAroundInterceptor {
     @Override
     protected Trace createTrace(Object o, Object[] objects) {
 
+        //do not trace MonitorService
         SoaHeader soaHeader = TransactionContext.Factory.getCurrentInstance().getHeader();
+        if (soaHeader.getServiceName().equals(DAPENG_MONITOR_SERVICE))
+            return traceContext.disableSampling();
 
         // If this transaction is not traceable, mark as disabled.
         if (soaHeader.getAttachment(DapengConstants.META_DO_NOT_TRACE) != null) {
