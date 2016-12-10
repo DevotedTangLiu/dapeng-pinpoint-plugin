@@ -45,6 +45,7 @@ public class DapengConsumerInterceptor implements AroundInterceptor4 {
             SpanEventRecorder recorder = trace.traceBlockBegin();
 
             recorder.recordServiceType(DapengConstants.DAPENG_CONSUMER_SERVICE_TYPE);
+            recorder.recordRpcName(soaHeader.getServiceName() + ":" + soaHeader.getMethodName());
 
             //因为这里是要将数据传给下一个节点（dapeng-provider）,所以用nextTraceId
             TraceId nextId = trace.getTraceId().getNextTraceId();
